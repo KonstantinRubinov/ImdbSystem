@@ -1,0 +1,1032 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ImdbFavoritesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MOVIEEXTENDS">
+          <Key>
+            <PropertyRef Name="movieImdbID" />
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="movieImdbID" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="moviePlot" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="movieUrl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="movieRated" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="movieImdbRating" Type="real" Nullable="false" />
+          <Property Name="movieSeen" Type="bit" Nullable="false" />
+          <Property Name="userID" Type="nvarchar" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MOVIES">
+          <Key>
+            <PropertyRef Name="movieImdbID" />
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="movieImdbID" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="movieTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="moviePoster" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="movieYear" Type="int" Nullable="false" />
+          <Property Name="userID" Type="nvarchar" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="nvarchar" MaxLength="9" Nullable="false" />
+          <Property Name="userFirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="userLastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="userNickName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="userBirthDate" Type="datetime" />
+          <Property Name="userGender" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="userEmail" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="userPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="userPicture" Type="nvarchar" MaxLength="50" />
+          <Property Name="userImdbPass" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__MOVIES__userID__05D8E0BE">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="MOVIES" Type="Self.MOVIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="MOVIES">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PK_MoviesExtends2">
+          <End Role="MOVIES" Type="Self.MOVIES" Multiplicity="1" />
+          <End Role="MOVIEEXTENDS" Type="Self.MOVIEEXTENDS" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MOVIES">
+              <PropertyRef Name="movieImdbID" />
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="MOVIEEXTENDS">
+              <PropertyRef Name="movieImdbID" />
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddExtendedMovie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieImdbID" Type="nvarchar" Mode="In" />
+          <Parameter Name="movieTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="moviePoster" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="movieYear" Type="int" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+          <Parameter Name="moviePlot" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="movieUrl" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="movieRated" Type="nvarchar" Mode="In" />
+          <Parameter Name="movieImdbRating" Type="real" Mode="In" />
+          <Parameter Name="movieSeen" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="AddMovie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieImdbID" Type="nvarchar" Mode="In" />
+          <Parameter Name="movieTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="moviePoster" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="movieYear" Type="int" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="AddUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+          <Parameter Name="userFirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="userLastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="userNickName" Type="nvarchar" Mode="In" />
+          <Parameter Name="userBirthDate" Type="datetime" Mode="In" />
+          <Parameter Name="userGender" Type="nvarchar" Mode="In" />
+          <Parameter Name="userEmail" Type="nvarchar" Mode="In" />
+          <Parameter Name="userPassword" Type="nvarchar" Mode="In" />
+          <Parameter Name="userPicture" Type="nvarchar" Mode="In" />
+          <Parameter Name="userImdbPass" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteExtendedMovie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieImdbID" Type="nvarchar" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteMovie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieImdbID" Type="nvarchar" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetAllExtendedMovies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetAllMovies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetAllUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieImdbID" Type="nvarchar" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetByIdExtendedMovies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieImdbID" Type="nvarchar" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetByTitle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetByTitleExtendedMovies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetByWord" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="word" Type="nvarchar" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetByWordExtendedMovies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="word" Type="nvarchar" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneUserById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetOneUserByName" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userNickName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="IsNameTaken" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userNickName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ReturnImdbPassByNamePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userNickName" Type="nvarchar" Mode="In" />
+          <Parameter Name="userPassword" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ReturnUserByNameLogin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userNickName" Type="nvarchar" Mode="In" />
+          <Parameter Name="userPassword" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ReturnUserByNamePassword" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userNickName" Type="nvarchar" Mode="In" />
+          <Parameter Name="userPassword" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ReturnUserIdByImdbPass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieImdbID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="ReturnUserIdByUserPass" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userPassword" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateExtendedMovie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieImdbID" Type="nvarchar" Mode="In" />
+          <Parameter Name="movieTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="moviePoster" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="movieYear" Type="int" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+          <Parameter Name="moviePlot" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="movieUrl" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="movieRated" Type="nvarchar" Mode="In" />
+          <Parameter Name="movieImdbRating" Type="real" Mode="In" />
+          <Parameter Name="movieSeen" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="UpdateMovie" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="movieImdbID" Type="nvarchar" Mode="In" />
+          <Parameter Name="movieTitle" Type="nvarchar" Mode="In" />
+          <Parameter Name="moviePoster" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="movieYear" Type="int" Mode="In" />
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+          <Parameter Name="userFirstName" Type="nvarchar" Mode="In" />
+          <Parameter Name="userLastName" Type="nvarchar" Mode="In" />
+          <Parameter Name="userNickName" Type="nvarchar" Mode="In" />
+          <Parameter Name="userBirthDate" Type="datetime" Mode="In" />
+          <Parameter Name="userGender" Type="nvarchar" Mode="In" />
+          <Parameter Name="userEmail" Type="nvarchar" Mode="In" />
+          <Parameter Name="userPassword" Type="nvarchar" Mode="In" />
+          <Parameter Name="userPicture" Type="nvarchar" Mode="In" />
+          <Parameter Name="userImdbPass" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="UploadUserImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userID" Type="nvarchar" Mode="In" />
+          <Parameter Name="userPicture" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="ImdbFavoritesModelStoreContainer">
+          <EntitySet Name="MOVIEEXTENDS" EntityType="Self.MOVIEEXTENDS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MOVIES" EntityType="Self.MOVIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__MOVIES__userID__05D8E0BE" Association="Self.FK__MOVIES__userID__05D8E0BE">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="MOVIES" EntitySet="MOVIES" />
+          </AssociationSet>
+          <AssociationSet Name="PK_MoviesExtends2" Association="Self.PK_MoviesExtends2">
+            <End Role="MOVIES" EntitySet="MOVIES" />
+            <End Role="MOVIEEXTENDS" EntitySet="MOVIEEXTENDS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ImdbFavoritesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MOVIEEXTEND">
+          <Key>
+            <PropertyRef Name="movieImdbID" />
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="movieImdbID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="moviePlot" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="movieUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="movieRated" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="movieImdbRating" Type="Single" Nullable="false" />
+          <Property Name="movieSeen" Type="Boolean" Nullable="false" />
+          <Property Name="userID" Type="String" MaxLength="9" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MOVy" Relationship="Self.PK_MoviesExtends2" FromRole="MOVIEEXTENDS" ToRole="MOVIES" />
+        </EntityType>
+        <EntityType Name="MOVy">
+          <Key>
+            <PropertyRef Name="movieImdbID" />
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="movieImdbID" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="movieTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="moviePoster" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="movieYear" Type="Int32" Nullable="false" />
+          <Property Name="userID" Type="String" MaxLength="9" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MOVIEEXTEND" Relationship="Self.PK_MoviesExtends2" FromRole="MOVIES" ToRole="MOVIEEXTENDS" />
+          <NavigationProperty Name="USER" Relationship="Self.FK__MOVIES__userID__05D8E0BE" FromRole="MOVIES" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="userID" />
+          </Key>
+          <Property Name="userID" Type="String" MaxLength="9" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userFirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userNickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userBirthDate" Type="DateTime" Precision="3" />
+          <Property Name="userGender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userPassword" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="userPicture" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="userImdbPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MOVIES" Relationship="Self.FK__MOVIES__userID__05D8E0BE" FromRole="USERS" ToRole="MOVIES" />
+        </EntityType>
+        <Association Name="PK_MoviesExtends2">
+          <End Role="MOVIES" Type="Self.MOVy" Multiplicity="1" />
+          <End Role="MOVIEEXTENDS" Type="Self.MOVIEEXTEND" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MOVIES">
+              <PropertyRef Name="movieImdbID" />
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="MOVIEEXTENDS">
+              <PropertyRef Name="movieImdbID" />
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MOVIES__userID__05D8E0BE">
+          <End Role="USERS" Type="Self.USER" Multiplicity="1" />
+          <End Role="MOVIES" Type="Self.MOVy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="MOVIES">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ImdbFavoritesEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MOVIEEXTENDS" EntityType="Self.MOVIEEXTEND" />
+          <EntitySet Name="MOVIES" EntityType="Self.MOVy" />
+          <EntitySet Name="USERS" EntityType="Self.USER" />
+          <AssociationSet Name="PK_MoviesExtends2" Association="Self.PK_MoviesExtends2">
+            <End Role="MOVIES" EntitySet="MOVIES" />
+            <End Role="MOVIEEXTENDS" EntitySet="MOVIEEXTENDS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MOVIES__userID__05D8E0BE" Association="Self.FK__MOVIES__userID__05D8E0BE">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="MOVIES" EntitySet="MOVIES" />
+          </AssociationSet>
+          <FunctionImport Name="AddExtendedMovie" ReturnType="Collection(ImdbFavoritesModel.AddExtendedMovie_Result)">
+            <Parameter Name="movieImdbID" Mode="In" Type="String" />
+            <Parameter Name="movieTitle" Mode="In" Type="String" />
+            <Parameter Name="moviePoster" Mode="In" Type="String" />
+            <Parameter Name="movieYear" Mode="In" Type="Int32" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+            <Parameter Name="moviePlot" Mode="In" Type="String" />
+            <Parameter Name="movieUrl" Mode="In" Type="String" />
+            <Parameter Name="movieRated" Mode="In" Type="String" />
+            <Parameter Name="movieImdbRating" Mode="In" Type="Single" />
+            <Parameter Name="movieSeen" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="AddMovie" ReturnType="Collection(ImdbFavoritesModel.AddMovie_Result)">
+            <Parameter Name="movieImdbID" Mode="In" Type="String" />
+            <Parameter Name="movieTitle" Mode="In" Type="String" />
+            <Parameter Name="moviePoster" Mode="In" Type="String" />
+            <Parameter Name="movieYear" Mode="In" Type="Int32" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="AddUser" ReturnType="Collection(ImdbFavoritesModel.AddUser_Result)">
+            <Parameter Name="userID" Mode="In" Type="String" />
+            <Parameter Name="userFirstName" Mode="In" Type="String" />
+            <Parameter Name="userLastName" Mode="In" Type="String" />
+            <Parameter Name="userNickName" Mode="In" Type="String" />
+            <Parameter Name="userBirthDate" Mode="In" Type="DateTime" />
+            <Parameter Name="userGender" Mode="In" Type="String" />
+            <Parameter Name="userEmail" Mode="In" Type="String" />
+            <Parameter Name="userPassword" Mode="In" Type="String" />
+            <Parameter Name="userPicture" Mode="In" Type="String" />
+            <Parameter Name="userImdbPass" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteExtendedMovie">
+            <Parameter Name="movieImdbID" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteMovie">
+            <Parameter Name="movieImdbID" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteUser">
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllExtendedMovies" ReturnType="Collection(ImdbFavoritesModel.GetAllExtendedMovies_Result)">
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllMovies" ReturnType="Collection(ImdbFavoritesModel.GetAllMovies_Result)">
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllUsers" ReturnType="Collection(ImdbFavoritesModel.GetAllUsers_Result)" />
+          <FunctionImport Name="GetById" ReturnType="Collection(ImdbFavoritesModel.GetById_Result)">
+            <Parameter Name="movieImdbID" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetByIdExtendedMovies" ReturnType="Collection(ImdbFavoritesModel.GetByIdExtendedMovies_Result)">
+            <Parameter Name="movieImdbID" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetByTitle" ReturnType="Collection(ImdbFavoritesModel.GetByTitle_Result)">
+            <Parameter Name="movieTitle" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetByTitleExtendedMovies" ReturnType="Collection(ImdbFavoritesModel.GetByTitleExtendedMovies_Result)">
+            <Parameter Name="movieTitle" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetByWord" ReturnType="Collection(ImdbFavoritesModel.GetByWord_Result)">
+            <Parameter Name="word" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetByWordExtendedMovies" ReturnType="Collection(ImdbFavoritesModel.GetByWordExtendedMovies_Result)">
+            <Parameter Name="word" Mode="In" Type="String" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneUserById" ReturnType="Collection(ImdbFavoritesModel.GetOneUserById_Result)">
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetOneUserByName" ReturnType="Collection(ImdbFavoritesModel.GetOneUserByName_Result)">
+            <Parameter Name="userNickName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="IsNameTaken" ReturnType="Collection(Int32)">
+            <Parameter Name="userNickName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ReturnImdbPassByNamePassword" ReturnType="Collection(ImdbFavoritesModel.ReturnImdbPassByNamePassword_Result)">
+            <Parameter Name="userNickName" Mode="In" Type="String" />
+            <Parameter Name="userPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ReturnUserByNameLogin" ReturnType="Collection(ImdbFavoritesModel.ReturnUserByNameLogin_Result)">
+            <Parameter Name="userNickName" Mode="In" Type="String" />
+            <Parameter Name="userPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ReturnUserByNamePassword" ReturnType="Collection(ImdbFavoritesModel.ReturnUserByNamePassword_Result)">
+            <Parameter Name="userNickName" Mode="In" Type="String" />
+            <Parameter Name="userPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ReturnUserIdByImdbPass" ReturnType="Collection(String)">
+            <Parameter Name="movieImdbID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ReturnUserIdByUserPass" ReturnType="Collection(String)">
+            <Parameter Name="userPassword" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateExtendedMovie" ReturnType="Collection(ImdbFavoritesModel.UpdateExtendedMovie_Result)">
+            <Parameter Name="movieImdbID" Mode="In" Type="String" />
+            <Parameter Name="movieTitle" Mode="In" Type="String" />
+            <Parameter Name="moviePoster" Mode="In" Type="String" />
+            <Parameter Name="movieYear" Mode="In" Type="Int32" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+            <Parameter Name="moviePlot" Mode="In" Type="String" />
+            <Parameter Name="movieUrl" Mode="In" Type="String" />
+            <Parameter Name="movieRated" Mode="In" Type="String" />
+            <Parameter Name="movieImdbRating" Mode="In" Type="Single" />
+            <Parameter Name="movieSeen" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateMovie" ReturnType="Collection(ImdbFavoritesModel.UpdateMovie_Result)">
+            <Parameter Name="movieImdbID" Mode="In" Type="String" />
+            <Parameter Name="movieTitle" Mode="In" Type="String" />
+            <Parameter Name="moviePoster" Mode="In" Type="String" />
+            <Parameter Name="movieYear" Mode="In" Type="Int32" />
+            <Parameter Name="userID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateUser" ReturnType="Collection(ImdbFavoritesModel.UpdateUser_Result)">
+            <Parameter Name="userID" Mode="In" Type="String" />
+            <Parameter Name="userFirstName" Mode="In" Type="String" />
+            <Parameter Name="userLastName" Mode="In" Type="String" />
+            <Parameter Name="userNickName" Mode="In" Type="String" />
+            <Parameter Name="userBirthDate" Mode="In" Type="DateTime" />
+            <Parameter Name="userGender" Mode="In" Type="String" />
+            <Parameter Name="userEmail" Mode="In" Type="String" />
+            <Parameter Name="userPassword" Mode="In" Type="String" />
+            <Parameter Name="userPicture" Mode="In" Type="String" />
+            <Parameter Name="userImdbPass" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UploadUserImage" ReturnType="Collection(ImdbFavoritesModel.UploadUserImage_Result)">
+            <Parameter Name="userID" Mode="In" Type="String" />
+            <Parameter Name="userPicture" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="AddExtendedMovie_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="moviePlot" Nullable="true" />
+          <Property Type="String" Name="movieUrl" Nullable="true" />
+          <Property Type="String" Name="movieRated" Nullable="true" MaxLength="10" />
+          <Property Type="Single" Name="movieImdbRating" Nullable="true" />
+          <Property Type="Boolean" Name="movieSeen" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="AddMovie_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+        </ComplexType>
+        <ComplexType Name="AddUser_Result">
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="userFirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userLastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userNickName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="userBirthDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="userGender" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userEmail" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPicture" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="userImdbPass" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetAllExtendedMovies_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="moviePlot" Nullable="true" />
+          <Property Type="String" Name="movieUrl" Nullable="true" />
+          <Property Type="String" Name="movieRated" Nullable="true" MaxLength="10" />
+          <Property Type="Single" Name="movieImdbRating" Nullable="true" />
+          <Property Type="Boolean" Name="movieSeen" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetAllMovies_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+        </ComplexType>
+        <ComplexType Name="GetAllUsers_Result">
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="userFirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userLastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userNickName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="userBirthDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="userGender" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userEmail" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPicture" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="userImdbPass" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetById_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+        </ComplexType>
+        <ComplexType Name="GetByIdExtendedMovies_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="moviePlot" Nullable="true" />
+          <Property Type="String" Name="movieUrl" Nullable="true" />
+          <Property Type="String" Name="movieRated" Nullable="true" MaxLength="10" />
+          <Property Type="Single" Name="movieImdbRating" Nullable="true" />
+          <Property Type="Boolean" Name="movieSeen" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetByTitle_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+        </ComplexType>
+        <ComplexType Name="GetByTitleExtendedMovies_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="moviePlot" Nullable="true" />
+          <Property Type="String" Name="movieUrl" Nullable="true" />
+          <Property Type="String" Name="movieRated" Nullable="true" MaxLength="10" />
+          <Property Type="Single" Name="movieImdbRating" Nullable="true" />
+          <Property Type="Boolean" Name="movieSeen" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetByWord_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+        </ComplexType>
+        <ComplexType Name="GetByWordExtendedMovies_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="moviePlot" Nullable="true" />
+          <Property Type="String" Name="movieUrl" Nullable="true" />
+          <Property Type="String" Name="movieRated" Nullable="true" MaxLength="10" />
+          <Property Type="Single" Name="movieImdbRating" Nullable="true" />
+          <Property Type="Boolean" Name="movieSeen" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetOneUserById_Result">
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="userFirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userLastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userNickName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="userBirthDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="userGender" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userEmail" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPicture" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="userImdbPass" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="GetOneUserByName_Result">
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="userFirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userLastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userNickName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="userBirthDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="userGender" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userEmail" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPicture" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="userImdbPass" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ReturnImdbPassByNamePassword_Result">
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="userFirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userLastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userNickName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="userBirthDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="userGender" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userEmail" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPicture" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="userImdbPass" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ReturnUserByNameLogin_Result">
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="userFirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userLastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userNickName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="userBirthDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="userGender" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userEmail" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPicture" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="userImdbPass" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="ReturnUserByNamePassword_Result">
+          <Property Type="String" Name="userNickName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userImdbPass" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="userPicture" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="UpdateExtendedMovie_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="moviePlot" Nullable="true" />
+          <Property Type="String" Name="movieUrl" Nullable="true" />
+          <Property Type="String" Name="movieRated" Nullable="true" MaxLength="10" />
+          <Property Type="Single" Name="movieImdbRating" Nullable="true" />
+          <Property Type="Boolean" Name="movieSeen" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="UpdateMovie_Result">
+          <Property Type="String" Name="movieImdbID" Nullable="false" MaxLength="15" />
+          <Property Type="String" Name="movieTitle" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="moviePoster" Nullable="false" />
+          <Property Type="Int32" Name="movieYear" Nullable="false" />
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+        </ComplexType>
+        <ComplexType Name="UpdateUser_Result">
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="userFirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userLastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userNickName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="userBirthDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="userGender" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userEmail" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPicture" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="userImdbPass" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="UploadUserImage_Result">
+          <Property Type="String" Name="userID" Nullable="false" MaxLength="9" />
+          <Property Type="String" Name="userFirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userLastName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userNickName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="userBirthDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="userGender" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userEmail" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPassword" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="userPicture" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="userImdbPass" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ImdbFavoritesModelStoreContainer" CdmEntityContainer="ImdbFavoritesEntities">
+          <EntitySetMapping Name="MOVIEEXTENDS">
+            <EntityTypeMapping TypeName="ImdbFavoritesModel.MOVIEEXTEND">
+              <MappingFragment StoreEntitySet="MOVIEEXTENDS">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="moviePlot" ColumnName="moviePlot" />
+                <ScalarProperty Name="movieUrl" ColumnName="movieUrl" />
+                <ScalarProperty Name="movieRated" ColumnName="movieRated" />
+                <ScalarProperty Name="movieImdbRating" ColumnName="movieImdbRating" />
+                <ScalarProperty Name="movieSeen" ColumnName="movieSeen" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MOVIES">
+            <EntityTypeMapping TypeName="ImdbFavoritesModel.MOVy">
+              <MappingFragment StoreEntitySet="MOVIES">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="ImdbFavoritesModel.USER">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userNickName" ColumnName="userNickName" />
+                <ScalarProperty Name="userBirthDate" ColumnName="userBirthDate" />
+                <ScalarProperty Name="userGender" ColumnName="userGender" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userPicture" ColumnName="userPicture" />
+                <ScalarProperty Name="userImdbPass" ColumnName="userImdbPass" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddExtendedMovie" FunctionName="ImdbFavoritesModel.Store.AddExtendedMovie">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.AddExtendedMovie_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="moviePlot" ColumnName="moviePlot" />
+                <ScalarProperty Name="movieUrl" ColumnName="movieUrl" />
+                <ScalarProperty Name="movieRated" ColumnName="movieRated" />
+                <ScalarProperty Name="movieImdbRating" ColumnName="movieImdbRating" />
+                <ScalarProperty Name="movieSeen" ColumnName="movieSeen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddMovie" FunctionName="ImdbFavoritesModel.Store.AddMovie">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.AddMovie_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddUser" FunctionName="ImdbFavoritesModel.Store.AddUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.AddUser_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userNickName" ColumnName="userNickName" />
+                <ScalarProperty Name="userBirthDate" ColumnName="userBirthDate" />
+                <ScalarProperty Name="userGender" ColumnName="userGender" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userPicture" ColumnName="userPicture" />
+                <ScalarProperty Name="userImdbPass" ColumnName="userImdbPass" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="DeleteExtendedMovie" FunctionName="ImdbFavoritesModel.Store.DeleteExtendedMovie" />
+          <FunctionImportMapping FunctionImportName="DeleteMovie" FunctionName="ImdbFavoritesModel.Store.DeleteMovie" />
+          <FunctionImportMapping FunctionImportName="DeleteUser" FunctionName="ImdbFavoritesModel.Store.DeleteUser" />
+          <FunctionImportMapping FunctionImportName="GetAllExtendedMovies" FunctionName="ImdbFavoritesModel.Store.GetAllExtendedMovies">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetAllExtendedMovies_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="moviePlot" ColumnName="moviePlot" />
+                <ScalarProperty Name="movieUrl" ColumnName="movieUrl" />
+                <ScalarProperty Name="movieRated" ColumnName="movieRated" />
+                <ScalarProperty Name="movieImdbRating" ColumnName="movieImdbRating" />
+                <ScalarProperty Name="movieSeen" ColumnName="movieSeen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllMovies" FunctionName="ImdbFavoritesModel.Store.GetAllMovies">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetAllMovies_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAllUsers" FunctionName="ImdbFavoritesModel.Store.GetAllUsers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetAllUsers_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userNickName" ColumnName="userNickName" />
+                <ScalarProperty Name="userBirthDate" ColumnName="userBirthDate" />
+                <ScalarProperty Name="userGender" ColumnName="userGender" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userPicture" ColumnName="userPicture" />
+                <ScalarProperty Name="userImdbPass" ColumnName="userImdbPass" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetById" FunctionName="ImdbFavoritesModel.Store.GetById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetById_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetByIdExtendedMovies" FunctionName="ImdbFavoritesModel.Store.GetByIdExtendedMovies">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetByIdExtendedMovies_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="moviePlot" ColumnName="moviePlot" />
+                <ScalarProperty Name="movieUrl" ColumnName="movieUrl" />
+                <ScalarProperty Name="movieRated" ColumnName="movieRated" />
+                <ScalarProperty Name="movieImdbRating" ColumnName="movieImdbRating" />
+                <ScalarProperty Name="movieSeen" ColumnName="movieSeen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetByTitle" FunctionName="ImdbFavoritesModel.Store.GetByTitle">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetByTitle_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetByTitleExtendedMovies" FunctionName="ImdbFavoritesModel.Store.GetByTitleExtendedMovies">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetByTitleExtendedMovies_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="moviePlot" ColumnName="moviePlot" />
+                <ScalarProperty Name="movieUrl" ColumnName="movieUrl" />
+                <ScalarProperty Name="movieRated" ColumnName="movieRated" />
+                <ScalarProperty Name="movieImdbRating" ColumnName="movieImdbRating" />
+                <ScalarProperty Name="movieSeen" ColumnName="movieSeen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetByWord" FunctionName="ImdbFavoritesModel.Store.GetByWord">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetByWord_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetByWordExtendedMovies" FunctionName="ImdbFavoritesModel.Store.GetByWordExtendedMovies">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetByWordExtendedMovies_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="moviePlot" ColumnName="moviePlot" />
+                <ScalarProperty Name="movieUrl" ColumnName="movieUrl" />
+                <ScalarProperty Name="movieRated" ColumnName="movieRated" />
+                <ScalarProperty Name="movieImdbRating" ColumnName="movieImdbRating" />
+                <ScalarProperty Name="movieSeen" ColumnName="movieSeen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneUserById" FunctionName="ImdbFavoritesModel.Store.GetOneUserById">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetOneUserById_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userNickName" ColumnName="userNickName" />
+                <ScalarProperty Name="userBirthDate" ColumnName="userBirthDate" />
+                <ScalarProperty Name="userGender" ColumnName="userGender" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userPicture" ColumnName="userPicture" />
+                <ScalarProperty Name="userImdbPass" ColumnName="userImdbPass" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetOneUserByName" FunctionName="ImdbFavoritesModel.Store.GetOneUserByName">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.GetOneUserByName_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userNickName" ColumnName="userNickName" />
+                <ScalarProperty Name="userBirthDate" ColumnName="userBirthDate" />
+                <ScalarProperty Name="userGender" ColumnName="userGender" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userPicture" ColumnName="userPicture" />
+                <ScalarProperty Name="userImdbPass" ColumnName="userImdbPass" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="IsNameTaken" FunctionName="ImdbFavoritesModel.Store.IsNameTaken" />
+          <FunctionImportMapping FunctionImportName="ReturnImdbPassByNamePassword" FunctionName="ImdbFavoritesModel.Store.ReturnImdbPassByNamePassword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.ReturnImdbPassByNamePassword_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userNickName" ColumnName="userNickName" />
+                <ScalarProperty Name="userBirthDate" ColumnName="userBirthDate" />
+                <ScalarProperty Name="userGender" ColumnName="userGender" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userPicture" ColumnName="userPicture" />
+                <ScalarProperty Name="userImdbPass" ColumnName="userImdbPass" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReturnUserByNameLogin" FunctionName="ImdbFavoritesModel.Store.ReturnUserByNameLogin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.ReturnUserByNameLogin_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userNickName" ColumnName="userNickName" />
+                <ScalarProperty Name="userBirthDate" ColumnName="userBirthDate" />
+                <ScalarProperty Name="userGender" ColumnName="userGender" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userPicture" ColumnName="userPicture" />
+                <ScalarProperty Name="userImdbPass" ColumnName="userImdbPass" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReturnUserByNamePassword" FunctionName="ImdbFavoritesModel.Store.ReturnUserByNamePassword">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.ReturnUserByNamePassword_Result">
+                <ScalarProperty Name="userNickName" ColumnName="userNickName" />
+                <ScalarProperty Name="userImdbPass" ColumnName="userImdbPass" />
+                <ScalarProperty Name="userPicture" ColumnName="userPicture" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ReturnUserIdByImdbPass" FunctionName="ImdbFavoritesModel.Store.ReturnUserIdByImdbPass" />
+          <FunctionImportMapping FunctionImportName="ReturnUserIdByUserPass" FunctionName="ImdbFavoritesModel.Store.ReturnUserIdByUserPass" />
+          <FunctionImportMapping FunctionImportName="UpdateExtendedMovie" FunctionName="ImdbFavoritesModel.Store.UpdateExtendedMovie">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.UpdateExtendedMovie_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="moviePlot" ColumnName="moviePlot" />
+                <ScalarProperty Name="movieUrl" ColumnName="movieUrl" />
+                <ScalarProperty Name="movieRated" ColumnName="movieRated" />
+                <ScalarProperty Name="movieImdbRating" ColumnName="movieImdbRating" />
+                <ScalarProperty Name="movieSeen" ColumnName="movieSeen" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateMovie" FunctionName="ImdbFavoritesModel.Store.UpdateMovie">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.UpdateMovie_Result">
+                <ScalarProperty Name="movieImdbID" ColumnName="movieImdbID" />
+                <ScalarProperty Name="movieTitle" ColumnName="movieTitle" />
+                <ScalarProperty Name="moviePoster" ColumnName="moviePoster" />
+                <ScalarProperty Name="movieYear" ColumnName="movieYear" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateUser" FunctionName="ImdbFavoritesModel.Store.UpdateUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.UpdateUser_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userNickName" ColumnName="userNickName" />
+                <ScalarProperty Name="userBirthDate" ColumnName="userBirthDate" />
+                <ScalarProperty Name="userGender" ColumnName="userGender" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userPicture" ColumnName="userPicture" />
+                <ScalarProperty Name="userImdbPass" ColumnName="userImdbPass" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UploadUserImage" FunctionName="ImdbFavoritesModel.Store.UploadUserImage">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ImdbFavoritesModel.UploadUserImage_Result">
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="userFirstName" ColumnName="userFirstName" />
+                <ScalarProperty Name="userLastName" ColumnName="userLastName" />
+                <ScalarProperty Name="userNickName" ColumnName="userNickName" />
+                <ScalarProperty Name="userBirthDate" ColumnName="userBirthDate" />
+                <ScalarProperty Name="userGender" ColumnName="userGender" />
+                <ScalarProperty Name="userEmail" ColumnName="userEmail" />
+                <ScalarProperty Name="userPassword" ColumnName="userPassword" />
+                <ScalarProperty Name="userPicture" ColumnName="userPicture" />
+                <ScalarProperty Name="userImdbPass" ColumnName="userImdbPass" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
