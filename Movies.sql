@@ -21,24 +21,21 @@ CREATE TABLE ImdbFavorites.MOVIES (
 	movieTitle nvarchar(50) NOT NULL,
 	moviePoster nvarchar(10000) NOT NULL,
 	movieYear int NOT NULL,
-	userID nvarchar(9) ,
+	userID nvarchar(9) NOT NULL,
     PRIMARY KEY (movieImdbID , userID),
-    FOREIGN KEY (userID)
-        REFERENCES users (userID)
+    FOREIGN KEY (userID) REFERENCES users (userID)
 );
 
 CREATE TABLE ImdbFavorites.MOVIEEXTENDS (
 	movieImdbID nvarchar(15) NOT NULL,
-	moviePlot nvarchar(1000) NOT NULL,
-	movieUrl nvarchar(1000) NOT NULL,
-	movieRated nvarchar(10) NOT NULL,
-	movieImdbRating real NOT NULL,
-	movieSeen bit NOT NULL,
+	moviePlot nvarchar(1000),
+	movieUrl nvarchar(1000),
+	movieRated nvarchar(10),
+	movieImdbRating real,
+	movieSeen bit,
 	userID nvarchar(9) NOT NULL,
-    
     PRIMARY KEY (movieImdbID , userID),
-    FOREIGN KEY (movieImdbID,userID)
-        REFERENCES MOVIES (movieImdbID,userID)
+    FOREIGN KEY (movieImdbID,userID) REFERENCES MOVIES (movieImdbID,userID)
 );
 
 
