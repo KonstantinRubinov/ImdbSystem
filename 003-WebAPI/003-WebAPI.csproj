@@ -155,6 +155,7 @@
     <Content Include="8-es2015.3bf14c3a49842dd48c50.js" />
     <Content Include="8-es5.3bf14c3a49842dd48c50.js" />
     <Content Include="assets\images\no-image.png" />
+    <Content Include="assets\images\users\no-image.png" />
     <Content Include="common-es2015.37d3980859a106612e23.js" />
     <Content Include="common-es5.37d3980859a106612e23.js" />
     <Content Include="favicon.ico" />
@@ -196,7 +197,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\images\movies\" />
-    <Folder Include="assets\images\users\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\001-DataAccessLayer\001-DataAccessLayer.csproj">
