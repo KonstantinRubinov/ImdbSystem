@@ -12,11 +12,12 @@ namespace ImdbSystem
 		static private MySqlCommand command = null;
 		static private MySqlDataReader reader = null;
 
-		static private void setConnectionString(string server = "localhost", string userId = "root", bool persistSecurityInfo = true, string password = "Rk14101981", string database = "imdbfavorites", bool useAffectedRows = true)
+		static private void setConnectionString(string server = "localhost", string userId = "root", uint port = 3306, bool persistSecurityInfo = true, string password = "Rk14101981", string database = "imdbfavorites", bool useAffectedRows = true)
 		{
 			builder = new MySqlConnectionStringBuilder();
 			builder.Server = server;
 			builder.UserID = userId;
+			builder.Port = port;
 			builder.PersistSecurityInfo = persistSecurityInfo;
 			builder.Password = password;
 			builder.Database = database;
@@ -30,6 +31,7 @@ namespace ImdbSystem
 				builder = new MySqlConnectionStringBuilder();
 				builder.Server = "localhost";
 				builder.UserID = "root";
+				builder.Port = 3306;
 				builder.PersistSecurityInfo = true;
 				builder.Password = "Rk14101981";
 				builder.Database = "imdbfavorites";
